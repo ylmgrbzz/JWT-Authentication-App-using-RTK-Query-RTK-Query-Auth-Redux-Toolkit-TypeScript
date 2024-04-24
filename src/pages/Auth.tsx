@@ -48,6 +48,16 @@ const Auth = () => {
       toast.error("Email and password are required");
     }
   };
+  const handleRegister = async () => {
+    if (password !== confirmPassword) {
+      toast.error("Passwords do not match");
+    }
+    if (email && password && firstName && lastName) {
+      await registerUser({ email, password, firstName, lastName });
+    } else {
+      toast.error("All fields are required");
+    }
+  };
 
   useEffect(() => {
     if (isLoginSucces) {
@@ -60,9 +70,27 @@ const Auth = () => {
       );
       navigate("/dashboard");
     }
-  }, [isLoginSucces]);
 
-  const handleLogout = async () => {};
+    if (isRegisterSucces) {
+      toast.success("User register succes");
+      dispatch(
+        setUser({
+          name: loginData?.result?.name,
+          token: loginData?.token,
+        })
+      );
+      navigate("/dashboard");
+    }
+  }, [isLoginSucces, isRegisterSucces]);
+
+  useEffect(() => {
+    if (isLoginError) {
+      toast.error((loginError as any).data.message);
+    }
+    if (isRegisterError) {
+      toast.error((isRegisterError as any).data.message);
+    }
+  }, [isLoginError, isRegisterError]);
 
   const navigate = useNavigate();
 
@@ -175,7 +203,7 @@ const Auth = () => {
                   ) : (
                     <button
                       className="btn btn-outline-light btn-lg px-5"
-                      onClick={() => handleLogout()}
+                      onClick={() => handleRegister()}
                     >
                       Register
                     </button>

@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { MDBInput } from "mdb-react-ui-kit";
+import { useLoginUserMutation } from "../services/AuthApi";
+import { toast } from "react-toastify";
 
 const initialState = {
   email: "",
@@ -14,6 +16,33 @@ const Auth = () => {
   const [formValues, setFormValues] = useState(initialState);
   const [showRegister, setShowRegister] = useState(false);
   const { email, password, firstName, lastName, confirmPassword } = formValues;
+  const [
+    loginUser,
+    {
+      data: loginData,
+      error: loginError,
+      isSuccess: isLoginSucces,
+      isError: isLoginError,
+    },
+  ] = useLoginUserMutation();
+
+  const handleLogin = async () => {
+    if (email && password) {
+      await loginUser({ email, password });
+    } else {
+      toast.error("Email and password are required");
+    }
+  };
+
+  useEffect(() => {
+    if (isLoginSucces) {
+      toast.success("Login successful");
+      navigate("/dashboard");
+    }
+  }, [isLoginSucces]);
+
+  const handleLogout = async () => {};
+
   const navigate = useNavigate();
 
   return (
@@ -118,14 +147,14 @@ const Auth = () => {
                   {!showRegister ? (
                     <button
                       className="btn btn-outline-light btn-lg px-5"
-                      onClick={() => navigate("/dashboard")}
+                      onClick={() => handleLogin()}
                     >
                       Login
                     </button>
                   ) : (
                     <button
                       className="btn btn-outline-light btn-lg px-5"
-                      onClick={() => navigate("/dashboard")}
+                      onClick={() => handleLogout()}
                     >
                       Register
                     </button>

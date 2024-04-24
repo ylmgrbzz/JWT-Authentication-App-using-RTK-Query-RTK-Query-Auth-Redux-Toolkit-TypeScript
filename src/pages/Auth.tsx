@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { MDBInput } from "mdb-react-ui-kit";
-import { useLoginUserMutation } from "../services/AuthApi";
+import {
+  useLoginUserMutation,
+  useRegisterUserMutation,
+} from "../services/AuthApi";
 import { toast } from "react-toastify";
 import { useAppDispatch } from "../app/hooks";
 import { setUser } from "../features/authSlice";
@@ -28,6 +31,15 @@ const Auth = () => {
       isError: isLoginError,
     },
   ] = useLoginUserMutation();
+  const [
+    registerUser,
+    {
+      data: registerData,
+      error: registerError,
+      isSuccess: isRegisterSucces,
+      isError: isRegisterError,
+    },
+  ] = useRegisterUserMutation();
 
   const handleLogin = async () => {
     if (email && password) {

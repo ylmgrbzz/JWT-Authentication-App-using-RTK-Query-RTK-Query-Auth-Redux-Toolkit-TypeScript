@@ -42,8 +42,8 @@ const Auth = () => {
       toast.success("Login successful");
       dispatch(
         setUser({
-          token: loginData.token,
-          name: loginData.name,
+          name: loginData?.result?.name,
+          token: loginData?.token,
         })
       );
       navigate("/dashboard");

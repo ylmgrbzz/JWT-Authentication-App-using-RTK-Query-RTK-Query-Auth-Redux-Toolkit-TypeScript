@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { logout } from '../features/authSlice';
 
 
 export const authApi = createApi({
@@ -8,6 +9,13 @@ export const authApi = createApi({
         loginUser: builder.mutation({
             query: (body: { email: string, password: string }) => ({
                 url: '/users/signin',
+                method: 'POST',
+                body,
+            }),
+        }),
+        registerUser: builder.mutation({
+            query: (body: { email: string, password: string, firstName: string, lastName: string }) => ({
+                url: '/users/signup',
                 method: 'POST',
                 body,
             }),

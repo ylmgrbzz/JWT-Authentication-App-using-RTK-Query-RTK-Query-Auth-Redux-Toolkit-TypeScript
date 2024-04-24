@@ -35,6 +35,38 @@ const Auth = () => {
                       ? "Register to access your dashboard"
                       : "Login to access your dashboard"}
                   </p>
+                  {showRegister && (
+                    <div className="form-outline form-white mb-4">
+                      <MDBInput
+                        label="First Name"
+                        type="text"
+                        name="firstName"
+                        value={firstName}
+                        onChange={(e) =>
+                          setFormValues({
+                            ...formValues,
+                            firstName: e.target.value,
+                          })
+                        }
+                        className="form-control form-control-lg"
+                      />
+                      <div className="form-outline form-white mb-4">
+                        <MDBInput
+                          label="Last Name"
+                          type="text"
+                          name="lastName"
+                          value={lastName}
+                          onChange={(e) =>
+                            setFormValues({
+                              ...formValues,
+                              lastName: e.target.value,
+                            })
+                          }
+                          className="form-control form-control-lg"
+                        />
+                      </div>
+                    </div>
+                  )}
 
                   <div className="form-outline form-white mb-4">
                     <MDBInput
@@ -66,6 +98,23 @@ const Auth = () => {
                       className="form-control form-control-lg"
                     />
                   </div>
+                  {showRegister && (
+                    <div className="form-outline form-white mb-4">
+                      <MDBInput
+                        label="Confirm Password"
+                        type="password"
+                        name="confirmPassword"
+                        value={confirmPassword}
+                        onChange={(e) =>
+                          setFormValues({
+                            ...formValues,
+                            confirmPassword: e.target.value,
+                          })
+                        }
+                        className="form-control form-control-lg"
+                      />
+                    </div>
+                  )}
                   {!showRegister ? (
                     <button
                       className="btn btn-outline-light btn-lg px-5"
